@@ -7,6 +7,7 @@ import streamlit as st
 
 BE_GEO_URL = 'https://gist.githubusercontent.com/jandot/ba7eff2e15a38c6f809ba5e8bd8b6977/raw/eb49ce8dd2604e558e10e15d9a3806f114744e80/belgium_municipalities_topojson.json'
 BE_MUNICIPALITIES_FEATURE = 'BE_municipalities'
+DATA_URL = 'https://github.com/gjbex/MigrationBelgium/raw/main/data/mia_2021.xlsx'
 MISSING_COLOR = 'white'
 SCHEME = 'lightgreyteal'
 
@@ -41,15 +42,11 @@ def create_plot(topo_data, data, column_name, data_type, tooltip_columns=None,
                 opacity=alt.value(0.9),
             ) + base
 
-def preprocess_data(data, columns):
-    for column in columns:
-        data[column] *= 100
-
 if __name__ == '__main__':
     st.title('Migratie achtergrond in Belgie')
     st.markdown('Gegevens verzameld door Jan Hertogen 1 januari 2021.')
     topo_data = create_topo_data(BE_GEO_URL, BE_MUNICIPALITIES_FEATURE)
-    data = pd.read_excel('data/mia_2021.xlsx')
+    data = pd.read_excel(DATA_URL)
     countries = data.columns[5:]
     left_column, right_column = st.columns(2)
     with left_column:
